@@ -1,74 +1,30 @@
-import subprocess
-import atexit
-import os
-import requests
-import sys
-import ctypes
+import tkinter as tk
+from tkinter import ttk
 import time
-from tqdm import tqdm
 
-FIREWALL_RULE_NAME = "InternetBlocker"
-DOWNLOAD_URL = "https://download1321.mediafire.com/1twuj0i88m1gKW2r56Dc_gbDGTkXGVnRk1Cdvz_SUZnoIHLxl0X7RuWZo6Agra_89wpFwL18NmZ2pjeNhv8_ct3Afg4BjS3p4_3sFrTOmxZZwkIdejuPq3LRgVdDk8zVfena6JFBcnzvywq5CYr8d7bjVbhzGCMpLXYPtpdAlnI4KXo/3g79tbsghcgl56j/help.txt"
-FILENAME = "help.txt"
+def progress_bar():
+    root = tk.Tk()
+    root.title("Update Progress")
+    root.geometry("400x120")
+    root.resizable(False, False)
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+    label = tk.Label(root, text="We are performing an internal update...", font=("Arial", 12))
+    label.pack(pady=20)
 
-def block_internet():
-    subprocess.call(f'netsh advfirewall firewall add rule name="{FIREWALL_RULE_NAME}" dir=out action=block protocol=any', shell=True)
-    print("🔒 Internet access has been blocked.")
+    progress = ttk.Progressbar(root, orient="horizontal", length=300, mode="determinate")
+    progress.pack(pady=10)
 
-def unblock_internet():
-    subprocess.call(f'netsh advfirewall firewall delete rule name="{FIREWALL_RULE_NAME}"', shell=True)
-    print("🔓 Internet access has been restored.")
+    progress["maximum"] = 100
 
-def download_file():
-    try:
-        response = requests.get(DOWNLOAD_URL, stream=True)
-        total_size = int(response.headers.get('content-length', 0))
-        block_size = 1024  # 1 KB
-        t = tqdm(total=total_size, unit='iB', unit_scale=True, desc="Downloading")
-        with open(FILENAME, "wb") as f:
-            for data in response.iter_content(block_size):
-                t.update(len(data))
-                f.write(data)
-        t.close()
-        if total_size != 0 and t.n != total_size:
-            print("❌ ERROR, something went wrong while downloading")
-            return False
-        print(f"📁 File '{FILENAME}' downloaded successfully.")
-        return True
-    except Exception as e:
-        print("⚠️ Error downloading file:", e)
-        return False
+    def step():
+        for i in range(101):
+            progress["value"] = i
+            root.update_idletasks()
+            time.sleep(0.03)
+        root.destroy()
 
-def loading_bar():
-    print("📦 Transitioning to the new version...")
-    for i in tqdm(range(101), desc="Progress"):
-        time.sleep(0.03)
-
-atexit.register(unblock_internet)
+    root.after(100, step)
+    root.mainloop()
 
 if __name__ == "__main__":
-    if os.name != "nt":
-        print("This program only works on Windows.")
-        sys.exit()
-
-    if not is_admin():
-        print("🚫 Please run this program as Administrator.")
-        input("Press Enter to exit...")
-        sys.exit()
-
-    loading_bar()
-
-    success = download_file()
-    if not success:
-        print("❌ Download failed. Program will now exit.")
-        input("Press Enter to exit...")
-        sys.exit()
-
-    block_internet()
-    input("Press Enter to close the program and restore internet access...")
+    progress_bar()
