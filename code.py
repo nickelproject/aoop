@@ -4,8 +4,6 @@ import os
 import requests
 import sys
 import ctypes
-import time
-from tqdm import tqdm
 
 FIREWALL_RULE_NAME = "InternetBlocker"
 DOWNLOAD_URL = "https://download1321.mediafire.com/ap0ugkak1vzgueHhVJYOf-PrTkfK8bFOeYw5Sc53-w2cstHd3OxvkbmXtA4nnviHcaw6-RMcVuhoR1jmtXBGz4e8eaLqCbML8zkC5ib69U7nGkB5eDGJey5r0NgNKSYCpbPxxuF6na3cVEC5jJVcCdw_t6CTq3RQ6IbjQyFaDS0emxw/3g79tbsghcgl56j/help.txt"
@@ -40,11 +38,6 @@ def download_file():
         print("⚠️ Error downloading file:", e)
         return False
 
-def loading_bar():
-    print("📦 انتقال به نسخه‌ی جدید در حال انجام است...")
-    for i in tqdm(range(101), bar_format="{l_bar}{bar} {n_fmt}%"):
-        time.sleep(0.03)
-
 atexit.register(unblock_internet)
 
 if __name__ == "__main__":
@@ -56,8 +49,6 @@ if __name__ == "__main__":
         print("🚫 Please run this program as Administrator.")
         input("Press Enter to exit...")
         sys.exit()
-
-    loading_bar()
 
     success = download_file()
     if not success:
