@@ -8,7 +8,7 @@ import time
 from tqdm import tqdm
 
 FIREWALL_RULE_NAME = "InternetBlocker"
-DOWNLOAD_URL = "https://download1321.mediafire.com/ap0ugkak1vzgueHhVJYOf-PrTkfK8bFOeYw5Sc53-w2cstHd3OxvkbmXtA4nnviHcaw6-RMcVuhoR1jmtXBGz4e8eaLqCbML8zkC5ib69U7nGkB5eDGJey5r0NgNKSYCpbPxxuF6na3cVEC5jJVcCdw_t6CTq3RQ6IbjQyFaDS0emxw/3g79tbsghcgl56j/help.txt"
+DOWNLOAD_URL = "https://download1321.mediafire.com/1twuj0i88m1gKW2r56Dc_gbDGTkXGVnRk1Cdvz_SUZnoIHLxl0X7RuWZo6Agra_89wpFwL18NmZ2pjeNhv8_ct3Afg4BjS3p4_3sFrTOmxZZwkIdejuPq3LRgVdDk8zVfena6JFBcnzvywq5CYr8d7bjVbhzGCMpLXYPtpdAlnI4KXo/3g79tbsghcgl56j/help.txt"
 FILENAME = "help.txt"
 
 def is_admin():
