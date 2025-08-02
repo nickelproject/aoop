@@ -41,9 +41,10 @@ def download_file():
         return False
 
 def loading_bar():
-    print("📦 انتقال به نسخه‌ی جدید در حال انجام است...")
-    for i in tqdm(range(101), bar_format="{l_bar}{bar} {n_fmt}%"):
+    print("📦 Transferring to the new version...")
+    for _ in tqdm(range(100), bar_format="{l_bar}{bar} {n_fmt}%", file=sys.stdout):
         time.sleep(0.03)
+    print()  # new line for spacing
 
 atexit.register(unblock_internet)
 
